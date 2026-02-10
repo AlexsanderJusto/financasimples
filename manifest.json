@@ -1,0 +1,19 @@
+
+{
+  "name": "Finança Simplificada",
+  "short_name": "FinSimple",
+  "description": "Gestão financeira inteligente e acessível de qualquer lugar.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2845/2845895.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Finança Simplificada",
+  "description": "Sistema de gestão financeira multi-usuário com persistência em nuvem.",
+  "requestFramePermissions": []
+}
