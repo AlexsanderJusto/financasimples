@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 // Added missing DollarSign icon import from lucide-react
 import { Plus, Trash2, Search, Calendar, Tag, CreditCard, ChevronDown, DollarSign } from 'lucide-react';
-import { Transaction, TransactionType } from '../types';
+import { Transaction, TransactionType } from '../types.ts';
 
 interface TransactionsViewProps {
   transactions: Transaction[];

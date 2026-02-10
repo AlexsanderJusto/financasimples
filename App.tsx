@@ -11,13 +11,13 @@ import {
   CheckCircle2,
   ShieldAlert
 } from 'lucide-react';
-import { AppTab, Transaction, FinancialData, FinancialReminder, User } from './types';
-import Dashboard from './components/Dashboard';
-import TransactionsView from './components/TransactionsView';
-import BudgetsView from './components/BudgetsView';
-import CalendarView from './components/CalendarView';
-import AdminView from './components/AdminView';
-import Auth from './components/Auth';
+import { AppTab, Transaction, FinancialData, FinancialReminder, User } from './types.ts';
+import Dashboard from './components/Dashboard.tsx';
+import TransactionsView from './components/TransactionsView.tsx';
+import BudgetsView from './components/BudgetsView.tsx';
+import CalendarView from './components/CalendarView.tsx';
+import AdminView from './components/AdminView.tsx';
+import Auth from './components/Auth.tsx';
 
 const INITIAL_DATA: FinancialData = {
   transactions: [],

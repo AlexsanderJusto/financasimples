@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Users, ShieldCheck, Eye, EyeOff, Search, Trash2, Key } from 'lucide-react';
-import { User } from '../types';
+import { User } from '../types.ts';
 
 const AdminView: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

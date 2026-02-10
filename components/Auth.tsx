@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Wallet, Mail, Lock, User as UserIcon, ArrowRight, ShieldCheck, Sparkles, ArrowLeft, RefreshCw, UserPlus } from 'lucide-react';
-import { User } from '../types';
+import { User } from '../types.ts';
 
 interface AuthProps {
   onLogin: (user: User) => void;

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Trash2, Calendar as CalIcon, DollarSign, Clock } from 'lucide-react';
-import { Transaction, FinancialReminder } from '../types';
+import { Transaction, FinancialReminder } from '../types.ts';
 
 interface CalendarViewProps {
   transactions: Transaction[];

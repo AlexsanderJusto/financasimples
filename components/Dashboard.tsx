@@ -13,7 +13,7 @@ import {
   Cell
 } from 'recharts';
 import { ArrowUpRight, ArrowDownRight, DollarSign, Activity, TrendingUp } from 'lucide-react';
-import { FinancialData } from '../types';
+import { FinancialData } from '../types.ts';
 
 interface DashboardProps {
   data: FinancialData;

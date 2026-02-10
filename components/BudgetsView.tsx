@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Target, AlertTriangle, ShieldCheck, Zap } from 'lucide-react';
-import { BudgetGoal } from '../types';
+import { BudgetGoal } from '../types.ts';
 
 interface BudgetsViewProps {
   budgets: BudgetGoal[];
