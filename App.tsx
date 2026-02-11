@@ -9,14 +9,15 @@ import {
   LogOut,
   Cloud,
   CheckCircle2,
-  ShieldAlert
+  Settings as SettingsIcon,
+  ShieldCheck
 } from 'lucide-react';
 import { AppTab, Transaction, FinancialData, FinancialReminder, User } from './types.ts';
 import Dashboard from './components/Dashboard.tsx';
 import TransactionsView from './components/TransactionsView.tsx';
 import BudgetsView from './components/BudgetsView.tsx';
 import CalendarView from './components/CalendarView.tsx';
-import AdminView from './components/AdminView.tsx';
+import SettingsView from './components/SettingsView.tsx';
 import Auth from './components/Auth.tsx';
 
 const INITIAL_DATA: FinancialData = {
@@ -61,7 +62,14 @@ export default function App() {
     setActiveTab(AppTab.DASHBOARD);
   };
 
-  // Auto-save logic (Database simulation)
+  const handlePasswordChange = (newPassword: string) => {
+    if (!user) return;
+    const storedUsers: User[] = JSON.parse(localStorage.getItem('fs_fixed_users') || '[]');
+    const updatedUsers = storedUsers.map(u => u.id === user.id ? { ...u, password: newPassword } : u);
+    localStorage.setItem('fs_fixed_users', JSON.stringify(updatedUsers));
+  };
+
+  // Auto-save logic
   useEffect(() => {
     if (user) {
       localStorage.setItem(`fs_data_${user.id}`, JSON.stringify(data));
@@ -119,10 +127,9 @@ export default function App() {
     return <Auth onLogin={(u) => { setUser(u); loadUserData(u.id); }} />;
   }
 
-  const isAdmin = user.email === 'alexsanderjusto123@gmail.com';
-
   return (
     <div className="flex h-screen overflow-hidden bg-slate-950 selection:bg-blue-500/30">
+      {/* Sidebar */}
       <nav className="w-20 md:w-72 border-r border-slate-800/50 bg-slate-900/40 backdrop-blur-xl flex flex-col items-center md:items-stretch transition-all duration-300">
         <div className="p-8 mb-4 flex items-center gap-3">
           <div className="w-12 h-12 bg-gradient-to-tr from-blue-600 to-cyan-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-500/20">
@@ -140,28 +147,26 @@ export default function App() {
           <NavItem active={activeTab === AppTab.BUDGETS} onClick={() => setActiveTab(AppTab.BUDGETS)} icon={<BarChart3 size={22} />} label="Orçamentos" />
           <NavItem active={activeTab === AppTab.CALENDAR} onClick={() => setActiveTab(AppTab.CALENDAR)} icon={<CalendarIcon size={22} />} label="Agenda" />
           
-          {isAdmin && (
-            <div className="pt-4 mt-4 border-t border-slate-800/50">
-               <NavItem 
-                active={activeTab === AppTab.ADMIN} 
-                onClick={() => setActiveTab(AppTab.ADMIN)} 
-                icon={<ShieldAlert size={22} className="text-blue-400" />} 
-                label="Admin Panel" 
-               />
-            </div>
-          )}
+          <div className="pt-4 mt-4 border-t border-slate-800/50">
+            <NavItem 
+              active={activeTab === AppTab.SETTINGS} 
+              onClick={() => setActiveTab(AppTab.SETTINGS)} 
+              icon={<SettingsIcon size={22} />} 
+              label="Configurações" 
+            />
+          </div>
         </div>
 
-        <div className="p-4 mt-auto space-y-4">
+        <div className="p-4 mt-auto">
           <div className="hidden md:block bg-slate-900/60 rounded-3xl p-5 border border-slate-800/50 shadow-inner">
              <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white relative">
                   {user.name.charAt(0)}
-                  {isAdmin && <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></div>}
+                  {user.role === 'ADMIN' && <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></div>}
                 </div>
                 <div className="overflow-hidden">
                   <p className="text-sm font-bold text-white truncate">{user.name}</p>
-                  <p className="text-[10px] text-slate-500 truncate">{isAdmin ? 'ADMINISTRADOR' : user.email}</p>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{user.role}</p>
                 </div>
              </div>
              <button 
@@ -175,26 +180,27 @@ export default function App() {
         </div>
       </nav>
 
+      {/* Content */}
       <main className="flex-1 overflow-y-auto p-4 md:p-10">
         <div className="max-w-6xl mx-auto">
           <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
             <div>
               <h1 className="text-4xl font-black text-white tracking-tight">
-                {activeTab === AppTab.DASHBOARD && `Olá, ${user.name.split(' ')[0]}!`}
+                {activeTab === AppTab.DASHBOARD && `Olá, ${user.name}!`}
                 {activeTab === AppTab.TRANSACTIONS && "Histórico"}
                 {activeTab === AppTab.BUDGETS && "Metas"}
                 {activeTab === AppTab.CALENDAR && "Agenda"}
-                {activeTab === AppTab.ADMIN && "Gestão de Usuários"}
+                {activeTab === AppTab.SETTINGS && "Perfil & Segurança"}
               </h1>
               <div className="flex items-center gap-3 mt-1">
                 <p className="text-slate-500 font-medium">
-                  {activeTab === AppTab.ADMIN ? "Acesso total à base de dados de credenciais." : "Controle total da sua vida financeira."}
+                  Controle total da sua vida financeira.
                 </p>
                 <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-900 border border-slate-800 rounded-lg">
                   {isSyncing ? (
                     <>
                       <Cloud className="text-blue-500 animate-pulse" size={12} />
-                      <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Database Sync...</span>
+                      <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Sincronizando...</span>
                     </>
                   ) : (
                     <>
@@ -219,7 +225,7 @@ export default function App() {
                 onDeleteReminder={deleteReminder}
               />
             )}
-            {activeTab === AppTab.ADMIN && isAdmin && <AdminView />}
+            {activeTab === AppTab.SETTINGS && <SettingsView user={user} onUpdatePassword={handlePasswordChange} />}
           </div>
         </div>
       </main>

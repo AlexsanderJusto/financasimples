@@ -4,7 +4,6 @@ export type TransactionType = 'INCOME' | 'EXPENSE';
 export interface User {
   id: string;
   name: string;
-  email: string;
   password?: string;
   role?: 'ADMIN' | 'USER';
 }
@@ -43,5 +42,5 @@ export enum AppTab {
   TRANSACTIONS = 'TRANSACTIONS',
   BUDGETS = 'BUDGETS',
   CALENDAR = 'CALENDAR',
-  ADMIN = 'ADMIN'
+  SETTINGS = 'SETTINGS'
 }
