@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Finança Simplificada</title>
     
+    <!-- Favicon e Ícones -->
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="apple-touch-icon" href="icon.png">
+    
     <!-- PWA & Mobile Optimization -->
     <meta name="theme-color" content="#020617" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,7 +17,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     
     <link rel="manifest" href="manifest.json" />
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2845/2845895.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -62,7 +65,6 @@
         padding-bottom: env(safe-area-inset-bottom);
       }
 
-      /* Custom animations for Auth */
       .auth-card {
         background: rgba(15, 23, 42, 0.6);
         backdrop-filter: blur(20px);
@@ -78,7 +80,8 @@
     "react": "https://esm.sh/react@^19.2.4",
     "recharts": "https://esm.sh/recharts@^3.7.0",
     "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
-    "@emailjs/browser": "https://esm.sh/@emailjs/browser@^4.4.1"
+    "@emailjs/browser": "https://esm.sh/@emailjs/browser@^4.4.1",
+    "vite": "https://esm.sh/vite@^7.3.1"
   }
 }
 </script>
