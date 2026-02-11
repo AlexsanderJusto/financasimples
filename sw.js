@@ -1,23 +1,10 @@
 
-const CACHE_NAME = 'av-finance-v1';
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json'
-];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
-    })
-  );
+// Service worker disabled to resolve caching issues
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
 });
-
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+  // Always fetch from network
+  event.respondWith(fetch(event.request));
 });

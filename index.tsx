@@ -3,12 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
-// Service Worker Registration for PWA
+// Unregister existing service workers to clear the "Content unavailable" error
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('SW Registered!', reg))
-      .catch(err => console.log('SW Reg error:', err));
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
   });
 }
 
