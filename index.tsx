@@ -3,14 +3,27 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
-// Unregister existing service workers to clear the "Content unavailable" error
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    for (const registration of registrations) {
-      registration.unregister();
+/**
+ * Robustly unregister service workers to clear potential "Content unavailable" cache errors.
+ * Wrapped in a safety check to avoid "document in an invalid state" errors in certain environments.
+ */
+const clearServiceWorkers = async () => {
+  if ('serviceWorker' in navigator) {
+    try {
+      // Check if document is ready, as getRegistrations() can fail if called too early or in invalid states
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const registration of registrations) {
+        await registration.unregister();
+      }
+    } catch (err) {
+      // Fail silently as this is a cleanup operation and shouldn't block app initialization
+      console.warn('Service worker cleanup skipped or failed:', err);
     }
-  });
-}
+  }
+};
+
+// Execute cleanup
+clearServiceWorkers();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
